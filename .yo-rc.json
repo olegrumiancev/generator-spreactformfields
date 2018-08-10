@@ -1,0 +1,9 @@
+{
+  "generator-node": {
+    "promptValues": {
+      "authorName": "Oleg Rumiancev",
+      "authorEmail": "oleg.rumiancev@gmail.com",
+      "authorUrl": "https://github.com/olegrumiancev"
+    }
+  }
+}

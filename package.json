@@ -1,0 +1,41 @@
+{
+  "name": "generator-spreactformfields",
+  "version": "0.7.0",
+  "description": "SharePoint React Form Fields generator - based on SharePoint Push-n-Pull generator",
+  "author": {
+    "name": "Oleg Rumiancev",
+    "email": "oleg.rumiancev@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/olegrumiancev/generator-spreactformfields/issues"
+  },
+  "main": "generators/app/index.js",
+  "keywords": [
+    "sharepoint",
+    "assets",
+    "yeoman-generator",
+    "front-end",
+    "scaffolders",
+    "react",
+    "listform",
+    "fields"
+  ],
+  "devDependencies": {
+    "copyfiles": "^2.0.0"
+  },
+  "dependencies": {
+    "colors": "^1.3.1",
+    "lodash": "^4.17.10",
+    "mkdirp": "^0.5.1",
+    "yeoman-generator": "^3.1.1",
+    "yosay": "^2.0.2"
+  },
+  "scripts": {
+    "build": "copyfiles ./src/templates/**/* ./app --up 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olegrumiancev/generator-spreactformfields.git"
+  },
+  "license": "MIT"
+}
