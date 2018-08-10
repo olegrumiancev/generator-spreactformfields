@@ -66,6 +66,14 @@ module.exports = class Utils {
     }
   }
 
+  removeDestFile(destRelPath) {
+    const p = this.resolveDestPath(destRelPath);
+    let exists = fs.existsSync(p);
+    if (exists) {
+      fs.unlinkSync(p);
+    }
+  }
+
   copyFile(sourceRelativePath, destRelativePath, force = false) {
     if (typeof destRelativePath === 'undefined' || destRelativePath === null) {
       destRelativePath = sourceRelativePath;

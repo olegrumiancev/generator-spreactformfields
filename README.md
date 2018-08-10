@@ -88,11 +88,10 @@ You are interested in 4 folders:
 
 ## Minimal path to awesome
 
-##### 1. Open code editor after scaffoldinf with "yo spreactformfields"
+##### 1. Open code editor after scaffolding with "yo spreactformfields"
 ##### 2. Run
 ...
 ```sh
-$ npm install
 $ npm run config
 ```
 **Open config/app.json and edit "spFolder" property if you need to change the path where webpacked files will be uploaded**

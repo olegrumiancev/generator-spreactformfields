@@ -41,6 +41,8 @@ module.exports = class extends Generator {
       colors.yellow.bold('[spformfields] Writing files')
     }`);
 
+    this.utils.removeDestFile('src/scripts/index.ts');
+    this.utils.removeDestFile('src/scripts/index.tsx');
     this.utils.copyFolder('src', 'src');
     this.utils.copyFolder('tools', 'tools');
 
