@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { sp } from '@pnp/sp';
 import { FormMode, getQueryString, executeSPQuery, IListFormProps, setupPnp } from 'sp-react-formfields/lib/interfaces';
+import { FormFieldLabel } from 'sp-react-formfields/lib/fields/FormFieldLabel';
 
 export class RootInternal extends React.Component<{ }, { formProps: IListFormProps, form: any, formField: any }> {
   private localContext = null;
@@ -49,15 +50,33 @@ export class RootInternal extends React.Component<{ }, { formProps: IListFormPro
     let result = null;
     if (!FormField) return result;
 
-    /* Include any JSX here, and also use <FormField InternalName='FieldInternalNameString' />
+    /* Include any JSX here, and also use (FormMode parameter is optional, if not spcified - defaults to new form)
+      - <FormField InternalName='FieldInternalNameString' FormMode={this.state.formProps.CurrentMode} />
+      - <FormFieldLabel InternalName='FieldInternalNameString' />
+      or call this.createFormRowMarkup method to easily instantiate a row with both label and form field included
+
       to create a custom form.
       If nothing is populated in this area - ListForm component will just render all valid fields one by one as default */
     // result = (
     //   <React.Fragment>
+    //      {this.createFormRowMarkup(FormField, 'Title')} {/* <-- this will render a row for Title field */} 
     //   </React.Fragment>
     // );
 
     return result;
+  }
+
+  private createFormRowMarkup(FormField: any, internalName: string): JSX.Element {
+    return (
+      <div className='formRow' key={`formRow_${internalName}`}>
+        <div className='rowLabel' key={`formLabelContainer_${internalName}`}>
+          <FormFieldLabel key={`formFieldLabel_${internalName}`} InternalName={internalName} />
+        </div>
+        <div className='rowField' key={`formFieldContainer_${internalName}`}>
+          <FormField key={`formfield_${internalName}`} InternalName={internalName} FormMode={this.state.formProps.CurrentMode} />
+        </div>
+      </div>
+    );
   }
 
   private createInitialProps = async (): Promise<IListFormProps> => {
