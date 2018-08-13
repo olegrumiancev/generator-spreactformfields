@@ -49,9 +49,31 @@ module.exports = class extends Generator {
     // modify existing package.json
     const pkgPath = path.join(this.destinationRoot(), 'package.json');
     let pkg = require(pkgPath);
-    // console.log(pkg);
     pkg.scripts['rebuild'] = 'gulp build --prod && gulp push --diff';
     fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
+
+    // modify existing app.json
+    const appPath = path.join(this.destinationRoot(), 'config/app.json');
+    let app = require(appPath);
+    // console.log(app);
+    if (app.copyAssetsMap) {
+      let f = app.copyAssetsMap.filter(el => el.name === 'Moment');
+      if (!f || f.length === 0) {
+        app.copyAssetsMap.push({
+          name: 'Moment',
+          src: [ './node_modules/moment/min/moment.min.js' ],
+          dist: './dist/libs'
+        })
+      }
+    }
+    if (app.webpackItemsMap) {
+      for (let i of app.webpackItemsMap) {
+        if (i.entry.indexOf('index.tsx') !== -1) {
+          i.entry = i.entry.replace('index.tsx', 'index.ts');
+        }
+      }
+    }
+    fs.writeFileSync(appPath, JSON.stringify(app, null, 2));
 
     this.log(`${colors.green('[spformfields] Done writing')}`);
   }
