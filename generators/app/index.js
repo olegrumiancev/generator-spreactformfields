@@ -19,8 +19,7 @@ module.exports = class extends Generator {
   }
 
   initialising() {
-    //this.composeWith(require.resolve('generator-sppp'));
-    // this.composeWith('sppp:app', this.options);
+    this.composeWith('sppp:app', this.options);
     this.composeWith(require.resolve('./localGenerator'), this.options);
   }
 
