@@ -1,6 +1,6 @@
 {
   "name": "generator-spreactformfields",
-  "version": "0.8.2",
+  "version": "0.9.1",
   "description": "SharePoint React Form Fields generator - based on SharePoint Pull-n-Push generator",
   "author": {
     "name": "Oleg Rumiancev",
