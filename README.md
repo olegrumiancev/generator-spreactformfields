@@ -54,6 +54,22 @@ You are interested in 4 folders:
    - call **gulp replaceListForm** to connect to your configured site, select a list and a Form Mode (New / Edit / Display / All) to transform
    - call **gulp restoreListForm** to connect to your configured site, select a list and Form Mode to revert back to SharePoint OOTB form
 
+#### Package managers switch
+
+With `--package-manager` (or `--pm`), a package manager can be selected. Possible managers are: `pnpm`, `yarm` and `npm`. `npm` is used by default and also as a fallback option.
+
+Use `yarn`:
+
+```bash
+yo sppp --pm yarn
+```
+
+Use `pnpm`:
+
+```bash
+yo sppp --pm pnpm
+```
+
 ## Features
   - Readily available scaffolding solution
   - Fork, clone and with a few actions you will transform any SharePoint list which uses standard OOTB fields
