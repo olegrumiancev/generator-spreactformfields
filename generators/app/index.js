@@ -6,11 +6,22 @@ const yosay = require('yosay');
 // const colors = require('colors');
 
 module.exports = class extends Generator {
+  constructor(...args) {
+    super(...args);
+
+    // Custom options
+    this.option('package-manager', {
+      description: 'preferred package manager (npm, yarn, pnpm)',
+      type: String,
+      alias: 'pm',
+      default: 'npm'
+    });
+  }
 
   initialising() {
     //this.composeWith(require.resolve('generator-sppp'));
-    this.composeWith('sppp:app');
-    this.composeWith(require.resolve('./localGenerator'));
+    this.composeWith('sppp:app', this.options);
+    this.composeWith(require.resolve('./localGenerator'), this.options);
   }
 
   prompting() {
