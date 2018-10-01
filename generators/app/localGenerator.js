@@ -6,6 +6,7 @@ const utils = require('./utils');
 const colors = require('colors');
 const fs = require('fs');
 const path = require('path');
+const dargs = require('dargs');
 
 const npmDependencies = {
   dependencies: [
@@ -34,6 +35,14 @@ module.exports = class extends Generator {
   constructor(...args) {
     super(...args);
     this.utils = new utils({ yo: this });
+
+    // Custom options
+    this.option('package-manager', {
+      description: 'preferred package manager (npm, yarn, pnpm)',
+      type: String,
+      alias: 'pm',
+      default: 'npm'
+    });
   }
 
   writing() {
@@ -87,18 +96,32 @@ module.exports = class extends Generator {
       let depOptions = null;
       let devDepOptions = null;
 
-      next && await this.utils.execPromise('yarn --version').then(_ => {
-        installer = this.yarnInstall.bind(this);
-        depOptions = { 'save': true };
-        devDepOptions = { 'dev': true };
-        next = false;
-      }).catch(_ => next = true);
+      depOptions = { 'save': true };
+      
+      if (this.option['package-manager'] === 'pnpm') {
+        next && await this.utils.execPromise('pnpm --version').then(_ => {
+          installer = (dep, opt) => {
+            const args = ['install'].concat(dep).concat(dargs(opt));
+            this.spawnCommandSync('pnpm', args);
+          };
+          devDepOptions = { 'save-dev': true };
+          next = false;
+        }).catch(_ => next = true);
+      }
+
+      if (this.options['package-manager'] === 'yarn') {
+        next && await this.utils.execPromise('yarn --version').then(_ => {
+          installer = this.yarnInstall.bind(this);
+          devDepOptions = { 'dev': true };
+          next = false;
+        }).catch(_ => next = true);
+      }
 
       next && (() => {
         installer = this.npmInstall.bind(this);
-        depOptions = { 'save': true };
         devDepOptions = { 'save-dev': true };
       })();
+
 
       let dependencies = npmDependencies.dependencies;
       let devDependencies = npmDependencies.devDependencies;
