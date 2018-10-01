@@ -97,8 +97,8 @@ module.exports = class extends Generator {
       let devDepOptions = null;
 
       depOptions = { 'save': true };
-      
-      if (this.option['package-manager'] === 'pnpm') {
+    
+      if (this.options['package-manager'].match(/pnpm/gi)) {
         next && await this.utils.execPromise('pnpm --version').then(_ => {
           installer = (dep, opt) => {
             const args = ['install'].concat(dep).concat(dargs(opt));
@@ -109,7 +109,7 @@ module.exports = class extends Generator {
         }).catch(_ => next = true);
       }
 
-      if (this.options['package-manager'] === 'yarn') {
+      if (this.options['package-manager'].match(/yarn/gi)) {
         next && await this.utils.execPromise('yarn --version').then(_ => {
           installer = this.yarnInstall.bind(this);
           devDepOptions = { 'dev': true };
